@@ -70,6 +70,10 @@ public:
         pos = newPos;
     }
 
+    sf::Vector2f getPos() {
+        return pos;
+    }
+
     void draw(sf::RenderTarget& rt) const {
 
         rt.draw(sprite);

@@ -24,4 +24,4 @@ private:
 	sf::Text mainMenu[MAX_MAIN_MENU];
 };
 
-void runGame(sf::RenderWindow& window, sf::RenderWindow& window2, int windowWidth, int windowHeight);
+int runGame(sf::RenderWindow& window, sf::RenderWindow& window2, int windowWidth, int windowHeight);

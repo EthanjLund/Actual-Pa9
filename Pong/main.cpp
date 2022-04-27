@@ -19,9 +19,31 @@ int main(void){
 	sf::RectangleShape background;
 	background.setSize(sf::Vector2f(windowWidth, windowHeight));
 	sf::Texture mainBackground;
-	mainBackground.loadFromFile("Textures/HideAndSeek.png");
+	mainBackground.loadFromFile("Textures/mainScreen.png");
 	background.setTexture(&mainBackground);
 
+	//highscore
+	int SCORE = 0;
+	int highScore = 0;
+	sf::Text text;
+	sf::Font font;
+	font.loadFromFile("Fonts/Arial.ttf");
+	text.setCharacterSize(50);
+	text.setFillColor(sf::Color::Black);
+	text.setFont(font);
+	text.setPosition(100.f, 205.f);
+	//static "Highscore!"
+	sf::Text text2;
+	sf::Font font2;
+	font2.loadFromFile("Fonts/Freedom.ttf");
+	text2.setCharacterSize(50);
+	text2.setFillColor(sf::Color::Red);
+	text2.setOutlineThickness(1.f);
+	text2.setOutlineColor(sf::Color::Yellow);
+	text2.setFont(font2);
+	text2.setString("High Score!");
+	text2.setPosition(10.f, 70.f);
+	
 	
 
 	while (MENU.isOpen()) {
@@ -49,19 +71,16 @@ int main(void){
 
 				int x = mainMenu.MainMenuPressed();
 				if (x == 0) {
-					runGame(Host, Join, windowWidth,windowHeight);
-					/*while (Host.isOpen()) {
-						sf::Event aevent;
-						while (Host.pollEvent(aevent)) {
-							if (aevent.type == sf::Event::Closed) {
-								Host.close();
-							}
-							
-						}
-						Join.close();
-						Host.clear();
-						Host.display();
-					}*/
+					SCORE = runGame(Host, Join, windowWidth,windowHeight);
+					
+					//set new high score
+					if (SCORE >= highScore) {
+						highScore = SCORE;
+						std::stringstream ss;
+						ss <<  SCORE;
+						text.setString(ss.str());
+					}
+					
 				}
 				if (x == 1) {
 					while (Join.isOpen()) {
@@ -87,6 +106,8 @@ int main(void){
 		MENU.clear();
 		MENU.draw(background);
 		mainMenu.draw(MENU);
+		MENU.draw(text2);
+		MENU.draw(text);
 		MENU.display();
 	}
 
